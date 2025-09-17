@@ -7,3 +7,4 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.99"
 regex = "1.9" # Or the latest stable version
+prettytable-rs = "^0.10"

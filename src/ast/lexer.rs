@@ -1,6 +1,7 @@
 use regex::Regex;
 use std::fmt::{Display, Formatter};
 
+use prettytable::{Cell, Row, Table};
 extern crate regex;
 
 #[derive(Debug)]
@@ -54,7 +55,7 @@ impl Display for TokenKind {
             TokenKind::RightParen => write!(f, ")"),
             TokenKind::LeftCurly => write!(f, "{{"),
             TokenKind::RightCurly => write!(f, "}}"),
-            TokenKind::Unidentified => write!(f, ""),
+            TokenKind::Unidentified => write!(f, "<not_implemented>"),
             TokenKind::SpecialType => write!(f, "::"),
             TokenKind::TypeOf => write!(f, ":"),
             TokenKind::FuncName(s) => write!(f, "{}", s),
@@ -88,7 +89,7 @@ pub fn split_words_into_vec(stream_buffer: String) -> Vec<String> {
 
     println!("cleaned words: {:?}", vec_words);
 
-    return vec_words;
+    vec_words
 }
 
 fn is_keyword(token: &str) -> bool {
@@ -98,7 +99,7 @@ fn is_keyword(token: &str) -> bool {
     if characters[0].is_alphabetic() {
         return true;
     }
-    return false;
+    false
 }
 
 fn is_identifier(token: &str) -> bool {
@@ -107,7 +108,7 @@ fn is_identifier(token: &str) -> bool {
     if !characters[0].is_alphabetic() {
         return true;
     }
-    return false;
+    false
 }
 
 pub fn tokenizer(stream_buffer: String) -> Vec<Token> {
@@ -233,7 +234,14 @@ pub fn tokenizer(stream_buffer: String) -> Vec<Token> {
         }
     }
 
-    println!("{:#?}", tokens);
+    println!("\n Tokens: ");
+    let mut table = Table::new();
+    table.add_row(row!["Kind", "Size", "Index"]);
+    for token in &tokens {
+        table.add_row(row![token.kind, token.span.size, token.span.index]);
+    }
 
-    return tokens;
+    table.printstd();
+
+    tokens
 }

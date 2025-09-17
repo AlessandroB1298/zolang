@@ -3,7 +3,8 @@ use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 mod ast;
-
+#[macro_use]
+extern crate prettytable;
 struct Cli {
     path: String,
 }
@@ -35,9 +36,8 @@ fn read_in_source_file(filename: String) -> anyhow::Result<String, anyhow::Error
 fn main() {
     let path = std::env::args().nth(1).expect("no path given");
     let args = Cli { path };
-    let final_path = format!("{}", args.path);
 
-    match read_in_source_file(final_path) {
+    match read_in_source_file(args.path) {
         //if we have a successful result from read_source_file we need to call the tokenizer.
         Ok(contents) => {
             ast::lexer::tokenizer(contents);

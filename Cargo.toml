@@ -1,0 +1,9 @@
+[package]
+name = "zoLang"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+anyhow = "1.0.99"
+regex = "1.9" # Or the latest stable version

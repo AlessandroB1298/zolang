@@ -8,7 +8,10 @@ This project is for a new language based off of typescript & C++ syntax, compile
 ## Getting Started
 
 Using the exmaple.zo, we can compile using the following command:
-`cargo run ./example.zo`
+
+```bash
+cargo run ./example.zo
+```
 
 
 ```

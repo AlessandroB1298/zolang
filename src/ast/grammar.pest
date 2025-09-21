@@ -1,0 +1,37 @@
+/*
+
+func IDENTIFIER TYPE_IDENTIFIER TYPE = (PARAMATER TYPE_IDENTIFIER TYPE) = > { EXPRESSION }
+
+*/
+
+FUNCTION_DECL = {"func" ~ IDENTIFIER ~ TYPE_IDENTIFIER ~ TYPE ~ "=" ~ "(" ~  PARAM? ~ ")" ~ "=>" ~ "{" ~ EXPRESSION ~"}" ~ SEMICOLON}
+
+FUNCTION_CALL = { IDENTIFIER ~ "(" ~ (EXPRESSION ~ ("," ~ EXPRESSION)*)? ~ ")" ~ SEMICOLON }
+
+
+PARAM = {IDENTIFIER ~ TYPE_IDENTIFIER ~ TYPE}
+
+
+
+// function name / variable name
+IDENTIFIER = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC)* }
+
+// type identifier 
+TYPE_IDENTIFIER = {":"}
+
+TYPE = {"String" | "Number" | "Char" | "Vector"| "Main"}
+
+SEMICOLON = {";"}
+
+
+LITERAL = { ASCII_DIGIT+ } 
+
+RETURN = {"return"}
+
+EXPRESSION = { FUNCTION_CALL | FUNCTION_DECL | RETURN ~ LITERAL~SEMICOLON | IDENTIFIER }
+
+WHITESPACE = _{ " " | "\t" | "\n" | "\r" }
+
+STATEMENT = { FUNCTION_DECL | EXPRESSION ~ SEMICOLON } 
+
+program = { SOI ~ (STATEMENT | WHITESPACE)* ~ EOI }

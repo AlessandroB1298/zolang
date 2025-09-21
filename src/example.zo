@@ -1,4 +1,1 @@
-
-func dealCards:Number = (cards: Number) => {
-
-};
+return;
